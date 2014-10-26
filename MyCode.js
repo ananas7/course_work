@@ -1,5 +1,5 @@
 $(function () {
-		// example 1
+	// example 1
 	var ex1 = document.getElementById("example1");
 	var cm1 = CodeMirror.fromTextArea(ex1, {
 		mode: "text/x-c++src",
@@ -11,6 +11,30 @@ $(function () {
 		showCursorWhenSelecting: true
 	});
 	cm1.setSize(250, 50);
+	// example 2
+	var ex2 = document.getElementById("example2");
+	var cm2 = CodeMirror.fromTextArea(ex2, {
+		mode: "text/x-c++src",
+		//theme: "pastel-on-dark",
+		lineNumbers: true,
+		indentUnit: 4,
+		indentWithTabs: true,
+		lineWrapping: true,
+		showCursorWhenSelecting: true
+	});
+	cm2.setSize(250, 50);
+	// example 2
+	var ex3 = document.getElementById("example3");
+	var cm3 = CodeMirror.fromTextArea(ex3, {
+		mode: "text/x-c++src",
+		//theme: "pastel-on-dark",
+		lineNumbers: true,
+		indentUnit: 4,
+		indentWithTabs: true,
+		lineWrapping: true,
+		showCursorWhenSelecting: true
+	});
+	cm3.setSize(250, 100);
 });
 
 // 1 задание
@@ -74,7 +98,7 @@ var question = [
 		job: "Исправьте все ошибки в коде.",
 		text_job: "#include<iostream>\nusing namespace std;\nint main() {\n\tint a = 0;\n\ta = 4 + 5;\n\tcout << a;\n}"
 	},
-	{
+	{ 		
 		type_job: highlight,
 		job: "Выделите те строки, где есть ошибки.",
 		text_job: "#include<iostream>\nusing namespace std;\nint main() {\n\tint a = 0;\na = 4 + 5;\n\tcout << a;\n}"
