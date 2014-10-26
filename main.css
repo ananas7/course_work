@@ -1,0 +1,22 @@
+.inner {
+	margin-left: -400px;
+	width: 800px;
+}
+.outer {
+	margin-left: 50%;
+	width: 50%;
+}
+.main {
+	font-size: 20pt;
+	border-radius: 25px;
+	width: 700px;
+	height: 300px;
+}
+.example {
+	width: 250px;
+	height: 70px;
+}
+.highlightLine{
+	color: black;
+	background-color: #477BEA;
+}
