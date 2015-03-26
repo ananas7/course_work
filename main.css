@@ -1,22 +1,25 @@
 .inner {
-	margin-left: -400px;
-	width: 800px;
+	margin-left: -300px;
+	width: 600px; 
 }
 .outer {
 	margin-left: 50%;
 	width: 50%;
 }
-.main {
-	font-size: 20pt;
-	border-radius: 25px;
-	width: 700px;
-	height: 300px;
+
+.question {
+    font-size: 20px;
+    text-align: center;
 }
-.example {
-	width: 250px;
-	height: 70px;
+
+.header {
+    font-size: 40px;
+    text-align: center;
 }
 .highlightLine{
 	color: black;
 	background-color: #477BEA;
+}
+.prog_bar {
+    margin-top: 10px;
 }

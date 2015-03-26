@@ -1,0 +1,12 @@
+#inc1ude <iostream>
+#include <vector>
+using namespace std;
+ int main () {
+    vector<vector<int> 0(5, vector<string> 5);
+    int i = 0;
+    for (;i < 10; ++i) {
+    for (int j = 0; j < 5; ++i) {
+        cin >> O[i][j];
+    }
+    }
+}

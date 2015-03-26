@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+        <link rel="stylesheet" href="codemirror/lib/codemirror.css">
+		<link rel="stylesheet" href="codemirror/theme/default.css">    
+		<script src="codemirror/lib/codemirror.js"></script>
+		<script src="codemirror/mode/javascript/javascript.js"></script>
+	</head>
+	<body>
+	<div id="container">
+		<textarea id="code" cols="60" rows="7"></textarea>
+	</div>
+	<script>
+		  var myCodeMirror = CodeMirror.fromTextArea(document.getElementById('code'), {
+			  lineNumbers: true,               // показывать номера строк
+			  matchBrackets: true,             // подсвечивать парные скобки
+			  mode: 'application/x-httpd-php', // стиль подсветки
+			  indentUnit: 4                    // размер табуляции
+			});
+		</script>
+	</body>
+</html>
+
+
+
+function shuffle(a, b, c){
+    for(var j, x, i = a.length; i; j = Math.floor(Math.random() * i), x = a[--i], a[i] = a[j], a[j] = x, x = b[--i], b[i] = b[j], b[j] = x, x = c[--i], c[i] = c[j], c[j] = x);
+    return o;
+};
+shuffle(question.type, question.example, question.answer);

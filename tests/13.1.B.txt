@@ -1,0 +1,13 @@
+#include <iostream>
+#include <vector>
+using namespace sdt;
+int main() {
+    vector <int> v;
+    int a = 0, b = 1;
+    for (int i = 1; i <= v.size(); ++i) {
+        a += v[i];
+    }
+    for (auto x : v) {
+        b *= x;
+    }
+}
