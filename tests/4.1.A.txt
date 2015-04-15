@@ -1,8 +1,0 @@
-inculde <iostraem>
-using namespces std;
-int main {
-int a;
-	cin<<a;
-	int b=a-2;
-cuot>> b;
-}

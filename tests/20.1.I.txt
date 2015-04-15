@@ -1,8 +1,0 @@
-#include <iostream>
-using namespace sdt;
-int main() {
-    int 1m = 20;
-    for (i = 0; i < 1m; ++i) {
-        cout << i;
-    }
-}

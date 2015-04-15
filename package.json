@@ -14,5 +14,12 @@
   "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/ananas7/course_work/issues"
+  },
+  "dependencies": {
+    "body-parser": "^1.12.2",
+    "consolidate": "^0.12.1",
+    "express": "^4.12.3",
+    "fs": "0.0.2",
+    "node-static": "^0.7.6"
   }
 }
