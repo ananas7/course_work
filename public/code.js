@@ -11,8 +11,8 @@ var textQuestion = {
     'I': "Найти и отметить строчки, где будут указаны ошибки при компиляции (ответов может быть несколько)",
     'J': "Инициализируйте необходимые в приведенном коде переменные",
     'H': "Найти и исправить ошибки (ХарДкорный мод)"
-}
-
+};
+var editor;
 var loadingProgBar = function(){
     $(".progress-bar").css("width", (k + 5) + "%");
     document.getElementById("bar").innerHTML = (k + 1) + "/100";
@@ -57,7 +57,7 @@ function makeQuestion() {
         alert("Пока это все, вы дали " + assessment + " правильных ответов");
     } else {
         ++k;
-        var nowQuestion = document.getElementById('question ');
+        var nowQuestion = document.getElementById('question');
         nowQuestion.innerHTML = textQuestion[question.type[k]];
         editor.getDoc().setValue(question.example[k]);
         if (!questionAllocated.indexOf(question.type[k])) {
@@ -71,14 +71,28 @@ function makeQuestion() {
     answers = [];
     loadingProgBar();
 }
-module.exports.makeQuestion = makeQuestion;
 
  var question = [];
- question = {
- 'type' : ['A','A','A','A','B','B','B','C','C','C','J','A'],
- 'number' : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
- 'example' : ['include iostream', 'include < iostraem >', 'int main {cout <<\'Hello, world\"}', 'inculde <iostraem>\nusing namespces std;\nint main {\nint a;\n\tcin>>a;\n\tint b=a-2;\ncuot<< b;\n}', '#include <iostream>\nusing namespace std;\nint main() {\n\tint a,b,c;\n\ta = 2;\n\tb = 3;\n\tc = a+b;\n\tcout << c;\n}', 'include <iostream>\nusing namespace std;\nint main() {\n\tint a,b,c;\n\ta = 2;\n\tb = 3;\n\tc = a+b;\n\tcout << c;\n}', '#include <iostraem>\nusing namespace std;\nint main() {\n\tint a,b,c;\n\ta = 2;\n\tb = 3;\n\tc = a+b;\n\tcout << c;\n}', '#include <iostream>\nusing namespace std;\nint main() {\nint a = 12;\nif (a < 10) {\ncout<<a;\n}else{\ncout<<a-10;\n}\n}', '#include < iostream >\nusing namespace std;\nint main (){\n\tint a=5;\nint b= 3;\n\t\tint c =2;\n\tcout<< (a+b) * c;\n}', '#include < iostream>\n\tusing namespace std;\n\tint main (){\n\tcout<<\"Hello, world!\";\n}'],
- 'answer' : ['#include <iostream>', '#include <iostream>', 'int main() {\n\tcout << \"Hello, world\";\n}', '#include <iostream>\nusing namespace std;\nint main() {\n\tint a;\n\tcin >> a;\n\tint b = a - 2;\n\tcout << b;\n}', '4,7', '1,4,7', '1,4,7', '#include <iostream>\nusing namespace std;\nint main() {\n\tint a = 12;\n\tif (a < 10) {\n\t\tcout << a;\n\t} else {\n\t\tcout << a - 10;\n\t}\n}', '#include <iostream>\nusing namespace std;\nint main() {\n\tint a = 5;\n\tint b = 3;\n\tint c = 2;\n\tcout << (a + b) * c;\n}', '#include <iostream>\nusing namespace std;\nint main() {\n\tcout << \"Hello, world!\";\n}']
- };
-
-makeQuestion();
+$(window).bind("load", function() {
+    $.ajax({
+        url: '/ajax',
+        type: 'POST',
+        cache: false,
+        data: { field1: 1, field2: 2 },
+        success: function(data){
+            question = JSON.parse(data);
+            editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+                lineNumbers: true,
+                matchBrackets: true,
+                value: question.example[0],
+                mode: 'text/x-c++src',
+                indentUnit: 4,
+                indentWithTabs: true,
+            });
+            makeQuestion();
+        }
+        , error: function(jqXHR, textStatus, err){
+            alert('text status '+textStatus+', err '+err);
+        }
+    })
+});
