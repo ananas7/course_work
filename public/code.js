@@ -1,4 +1,4 @@
-var answers = [], correct = [], k = -1, assessment = 0, questionAllocated = "BDEFKI";
+var answers = [], k = -1, questionAllocated = "BDEFKI";
 var textQuestion = {
     'A': "Найти и иcправить ошибку в коде" ,
     'B': "Отметить строку с ошибкой (ответов может быть несколько)",
@@ -18,35 +18,31 @@ var loadingProgBar = function(){
     document.getElementById("bar").innerHTML = (k + 1) + "/100";
 };
 function testA() {
-    if (questionAllocated.indexOf(question.type[k])) {
-        if (editor.getValue() == question.answer[k]) {
-            ++assessment;
+    $.ajax({
+        url: '/testA',
+        type: 'POST',
+        cache: false,
+        data: { ques: k, answer: editor.getValue(), selectLine: answers },
+        success: function(data){}
+        , error: function(jqXHR, textStatus, err){
+            alert('text status '+textStatus+', err '+err);
         }
-    } else {
-        var nums = [];
-        answers.forEach(function (a, i) {
-            if (a) nums.push(i);
-        });
-        if (nums.join(',') == correct.join(',')) {
-            ++assessment;
-        }
-    }
+    })
 }
 
 function testB() {
-    if (questionAllocated.indexOf(question.type[k])) {
-        if (editor.getValue() == question.answer[k]) {
-            alert("Right");
-        } else {
-            alert("Wrong");
+    $.ajax({
+        url: '/testB',
+        type: 'POST',
+        cache: false,
+        data: { ques: k, answer: editor.getValue(), selectLine: answers },
+        success: function(data){
+            alert(data);
         }
-    } else {
-        var nums = [];
-        answers.forEach(function (a, i) {
-            if (a) nums.push(i);
-        });
-        alert(nums.join(',') == correct.join(',') ? "right" : "wrong");
-    }
+        , error: function(jqXHR, textStatus, err){
+            alert('text status '+textStatus+', err '+err);
+        }
+    })
 }
 
 function makeQuestion() {
@@ -54,14 +50,25 @@ function makeQuestion() {
         testA();
     }
     if (k == 9) {
-        alert("Пока это все, вы дали " + assessment + " правильных ответов");
+        $.ajax({
+            url: '/assessment',
+            type: 'POST',
+            cache: false,
+            data: { },
+            success: function(data){
+                alert("Пока это все, вы дали " + JSON.parse(data) + " правильных ответов");
+                console.log(JSON.parse(data));
+            }
+            , error: function(jqXHR, textStatus, err){
+                alert('text status '+textStatus+', err '+err);
+            }
+        })
     } else {
         ++k;
         var nowQuestion = document.getElementById('question');
         nowQuestion.innerHTML = textQuestion[question.type[k]];
         editor.getDoc().setValue(question.example[k]);
         if (!questionAllocated.indexOf(question.type[k])) {
-            correct = question.answer[k].split(',');
             $(editor.getWrapperElement()).find('.CodeMirror-linenumber').click(function(){
                 $(this).toggleClass("highlightLine");
                 answers[$(this).text()] ^= 1;
@@ -72,13 +79,13 @@ function makeQuestion() {
     loadingProgBar();
 }
 
- var question = [];
+var question = [];
 $(window).bind("load", function() {
     $.ajax({
         url: '/ajax',
         type: 'POST',
         cache: false,
-        data: { field1: 1, field2: 2 },
+        data: {},
         success: function(data){
             question = JSON.parse(data);
             editor = CodeMirror.fromTextArea(document.getElementById('code'), {
@@ -87,7 +94,7 @@ $(window).bind("load", function() {
                 value: question.example[0],
                 mode: 'text/x-c++src',
                 indentUnit: 4,
-                indentWithTabs: true,
+                indentWithTabs: true
             });
             makeQuestion();
         }
