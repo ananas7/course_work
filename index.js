@@ -56,11 +56,10 @@ app.post('/testB', function (req, res){
     } else {
         var nums = [];
         correct = question.answer[k].split(',');
-        /*answers.forEach(function (a, i) {
-            if (a) nums.push(i);
-        });*/
-        for (var i = 0; i < answers.length; ++i) {
-            if (answers.indexOf(i)) nums.push(i);
+        if (answers != undefined) {
+            for (var i = 0; i < answers.length; ++i) {
+                if (answers[i]) nums.push(i);
+            }
         }
         res.send(nums.join(',') == correct.join(',') ? "right" : "wrong");
     }
@@ -77,16 +76,16 @@ app.post('/testA', function (req, res){
     } else {
         var nums = [];
         correct = question.answer[k].split(',');
-        /*answers.forEach(function (a, i) {
-            if (a) nums.push(i);
-        });*/
-        for (var i = 0; i < answers.length; ++i) {
-            if (answers.indexOf(i)) nums.push(i);
-        }
-        if (nums.join(',') == correct.join(',')) {
-            ++assessment;
+        if (answers != undefined) {
+            for (var i = 0; i < answers.length; ++i) {
+                if (answers[i]) nums.push(i);
+            }
+            if (nums.join(',') == correct.join(',')) {
+                ++assessment;
+            }
         }
     }
+    res.send();
 });
 
 app.post('/assessment', function (req, res){

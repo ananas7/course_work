@@ -14,52 +14,64 @@ var textQuestion = {
 };
 var editor;
 var loadingProgBar = function(){
-    $(".progress-bar").css("width", (k + 5) + "%");
-    document.getElementById("bar").innerHTML = (k + 1) + "/100";
+    $(".progress-bar").css("width", ((k + 1)*(100/23)) + "%");
+    document.getElementById("bar").innerHTML = k + 1 + "/23";
 };
 function testA() {
     $.ajax({
         url: '/testA',
         type: 'POST',
-        cache: false,
+        crossDomain: true,
         data: { ques: k, answer: editor.getValue(), selectLine: answers },
-        success: function(data){}
-        , error: function(jqXHR, textStatus, err){
+        success: function(data){},
+        error: function(jqXHR, textStatus, err){
             alert('text status '+textStatus+', err '+err);
         }
     })
 }
 
 function testB() {
+    console.log(answers);
     $.ajax({
         url: '/testB',
         type: 'POST',
-        cache: false,
+        crossDomain: true,
         data: { ques: k, answer: editor.getValue(), selectLine: answers },
-        success: function(data){
+        success: function(data) {
             alert(data);
-        }
-        , error: function(jqXHR, textStatus, err){
+        },
+        error: function(jqXHR, textStatus, err){
             alert('text status '+textStatus+', err '+err);
         }
     })
 }
 
 function makeQuestion() {
-    if (k > 0) {
+    if (k >= 0 && k < 22) {
         testA();
     }
-    if (k == 9) {
+    if (k == 22) {
         $.ajax({
             url: '/assessment',
             type: 'POST',
-            cache: false,
+            crossDomain: true,
             data: { },
             success: function(data){
-                alert("Пока это все, вы дали " + JSON.parse(data) + " правильных ответов");
-                console.log(JSON.parse(data));
-            }
-            , error: function(jqXHR, textStatus, err){
+                var nowQuestion = document.getElementById('question');
+                nowQuestion.innerHTML = "Поздравляем, вы завершили тест!";
+                editor.getDoc().setValue("Всего правильных заданий: "  + JSON.parse(data));
+                editor.setOption("readOnly", true);
+                canvas = document.getElementById('surprise');
+                context = canvas.getContext("2d");
+                var img = new Image();
+                canvas.clientWidth = img.width * 0.5;
+                canvas.clientHeight = img.height * 0.5;
+                img.src = "../img/nichosi.png";
+                img.onload = function() {
+                    context.drawImage(img, 0, 0, canvas.clientWidth, canvas.clientHeight);
+                };
+            },
+            error: function(jqXHR, textStatus, err){
                 alert('text status '+textStatus+', err '+err);
             }
         })
@@ -88,18 +100,18 @@ $(window).bind("load", function() {
         data: {},
         success: function(data){
             question = JSON.parse(data);
-            editor = CodeMirror.fromTextArea(document.getElementById('code'), {
-                lineNumbers: true,
-                matchBrackets: true,
-                value: question.example[0],
-                mode: 'text/x-c++src',
-                indentUnit: 4,
-                indentWithTabs: true
-            });
             makeQuestion();
         }
         , error: function(jqXHR, textStatus, err){
             alert('text status '+textStatus+', err '+err);
         }
     })
+});
+editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+    lineNumbers: true,
+    matchBrackets: true,
+    mode: 'text/x-c++src',
+    indentUnit: 4,
+    indentWithTabs: true,
+    theme: 'ambiance'
 });
