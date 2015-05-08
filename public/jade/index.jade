@@ -1,0 +1,30 @@
+extends ./layout
+block content
+    form.form_auto
+        div.form-group
+            input(
+                id='email'
+                class='form-control'
+                type='email'
+                placeholder='Email'
+                )
+        div.form-group
+            input(
+                id='password'
+                class='form-control'
+                type='password'
+                placeholder='Password'
+            )
+        div.form-group
+            button(
+                class='btn'
+                type='submit'
+                onclick='logSuccess()'
+            )
+                strong Войти
+    button(
+        class='btn'
+        type='submit'
+        onclick="location.href='/registr'"
+    )
+        strong Зарегистрироваться

@@ -1,0 +1,76 @@
+extends ./layout
+block content
+    h1
+        strong Регистрация
+    form
+        div.form-group
+            label(
+                class="control-label"
+                for="fulltname"
+            )
+                strong Полное имя
+            input(
+                class="form-control"
+                type="text"
+                id="fulltname"
+                placeholder="Ломтев Илья"
+            )
+        div.form-group
+            label(
+                class="control-label"
+                for="institution"
+            )
+                strong Учебное заведение
+            input(
+                class="form-control"
+                type="text"
+                id="institution"
+                placeholder="ВГИ (ф)ВолГУ"
+            )
+        div.form-group
+            label(
+                class="control-label"
+                for="inputEmail"
+            )
+                strong Email
+            input(
+                class="form-control"
+                type="email"
+                id="inputEmail"
+                placeholder="email@example.com"
+            )
+        div.form-group
+            label(
+                class="control-label"
+                for="login"
+            )
+                strong Логин
+            input(
+                class="form-control"
+                type="text" id="login"
+                placeholder="lomtev"
+            )
+        div.form-group
+            label(
+                class="control-label"
+                for="password"
+            )
+                strong Пароль
+            input(
+                class="form-control"
+                type="password"
+                id="password"
+                placeholder="Пароль"
+            )
+        div.form-group
+            button(
+                type="submit"
+                class="btn"
+            )
+                strong Зарегистрироваться
+    button(
+        class='btn'
+        type='submit'
+        onclick="location.href='/'"
+    )
+        strong Войти

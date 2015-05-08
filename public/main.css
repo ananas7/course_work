@@ -29,3 +29,15 @@
 #surprise {
 	margin-left: 30%;
 }
+body {
+	background-color: #eee;
+}
+h1 {
+	text-align: center;
+}
+.form_auto {
+	margin-top: 30px;
+}
+.btn_registr {
+	margin-left: 10px;
+}

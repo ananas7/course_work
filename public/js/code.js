@@ -1,9 +1,9 @@
 var answers = [], k = -1, questionAllocated = "BDEFKI";
 var textQuestion = {
-    'A': "Найти и иcправить ошибку в коде" ,
+    'A': "Найти и иcправить ошибки в коде и в верстке" ,
     'B': "Отметить строку с ошибкой (ответов может быть несколько)",
     'C': "Расставить правильно табулатуру и пробелы",
-    'D': "Найти и отметить строчки с неправильной расстоновкой табулатуры или пробелов (ответов может быть несколько)",
+    'D': "Найти и отметить строчки с неправильной расстановкой табулатуры или пробелов (ответов может быть несколько)",
     'E': "Найти и отметить строчки с синтаксическими ошибками (ответов может быть несколько)",
     'F': "Указать строчки где инициализированы глобальные переменные (ответов может быть несколько)",
     'G': "Найти и исправить ошибку инициализации переменных",
@@ -14,8 +14,8 @@ var textQuestion = {
 };
 var editor;
 var loadingProgBar = function(){
-    $(".progress-bar").css("width", ((k + 1)*(100/23)) + "%");
-    document.getElementById("bar").innerHTML = k + 1 + "/23";
+    $(".progress-bar").css("width", ((k + 1)*(100/21)) + "%");
+    document.getElementById("bar").innerHTML = k + 1 + "/21";
 };
 function testA() {
     $.ajax({
@@ -31,7 +31,6 @@ function testA() {
 }
 
 function testB() {
-    console.log(answers);
     $.ajax({
         url: '/testB',
         type: 'POST',
@@ -47,10 +46,10 @@ function testB() {
 }
 
 function makeQuestion() {
-    if (k >= 0 && k < 22) {
+    if (k >= 0 && k <= 20) {
         testA();
     }
-    if (k == 22) {
+    if (k == 20) {
         $.ajax({
             url: '/assessment',
             type: 'POST',
@@ -80,11 +79,14 @@ function makeQuestion() {
         var nowQuestion = document.getElementById('question');
         nowQuestion.innerHTML = textQuestion[question.type[k]];
         editor.getDoc().setValue(question.example[k]);
-        if (!questionAllocated.indexOf(question.type[k])) {
+        if (questionAllocated.indexOf(question.type[k]) != -1) {
+            editor.setOption("readOnly", true);
             $(editor.getWrapperElement()).find('.CodeMirror-linenumber').click(function(){
                 $(this).toggleClass("highlightLine");
                 answers[$(this).text()] ^= 1;
             });
+        } else {
+            editor.setOption("readOnly", false);
         }
     }
     answers = [];
